@@ -1,0 +1,54 @@
+<div class="grid-container">
+  <div class="filter-section">
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-select [formControl]="filterControl" name="filter" (valueChange)="onFilterChange();">
+          <mat-option *ngFor="let option of filterOptions" [value]="option.id">
+            {{option.text}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="" *ngFor="let label of noteLabels; let index = index;">
+    <div class="row-wrapper" *ngIf="index === 0">
+      <div class="weekday-label"></div>
+      <div class="weekday-value" *ngFor="let day of weekDays;">{{day}}</div>
+    </div>
+    <div class="row-wrapper">
+      <div class="weekday-label-node">{{label.text}}</div>
+      <div class="weekday-value-node" *ngFor="let day of weekDays;">
+        <div class="weekday-notes">
+          <mat-card class="note-card"
+            *ngFor="let note of formattedNotesMap[label.text][day];let noteIdx = index;"
+            [style.height.px]="(154 - noteIdx * 2)"
+            [style.width.%]="(85 * note.duration)">
+            <mat-card-header>
+              <mat-card-title>
+                <span class="note-id">{{note.id}}</span>
+                <span>{{note.title}}</span>
+                <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" xPosition="before">
+                  <button mat-menu-item (click)="openDialog(note)">Edit Note</button>
+                </mat-menu>
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="note-card-content">
+              <p class="note-summary"
+                [matTooltip]="note.summary"
+                [matTooltipPosition]="'above'">
+                {{note.summary}}
+              </p>
+              <div>
+                <div>Start Date: {{note.formattedDate}}</div>
+                <div>Duration: {{note.duration}}</div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

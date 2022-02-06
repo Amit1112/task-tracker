@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Edit Note</h1>
+<div mat-dialog-content>
+  <form [formGroup]="noteForm">
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Note Title</mat-label>
+        <input matInput formControlName="noteTitle" required>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Note Description</mat-label>
+        <textarea matInput formControlName="noteDescription" required></textarea>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close (click)="onNoClick()">Cancel</button>
+  <button mat-button (click)="updateNote()" [disabled]="noteForm.invalid">Save</button>
+</mat-dialog-actions>
