@@ -26,7 +26,7 @@ export class NoteDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.noteForm = this.formBuilder.group({
-      noteTitle: [this.dialogNoteData.noteInfo.title, [Validators.required, Validators.minLength(3), Validators.maxLength(25)]],
+      noteTitle: [this.dialogNoteData.noteInfo.title, [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       noteDescription: [this.dialogNoteData.noteInfo.summary, [Validators.required, Validators.maxLength(250)]],
     });
   }

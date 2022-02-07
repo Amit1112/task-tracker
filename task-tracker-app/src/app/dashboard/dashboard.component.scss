@@ -1,15 +1,19 @@
+$weekdays-background: #f5f1f1;
+
 .grid-container {
   margin: 20px;
 
   ::ng-deep {
     .mat-card-header-text {
       margin: 0;
+      width: 100%;
     }
     .mat-card-header {
       .mat-card-title {
         display: flex;
         align-items: center;
         font-size: 16px;
+        justify-content: space-between;
       }
     }
     .mat-card {
@@ -46,6 +50,7 @@
     border: 1px solid gray;
     height: 40px;
     flex: 0 0 17%;
+    background: $weekdays-background;
   }
 
   .weekday-label-node {
@@ -74,27 +79,26 @@
           border: 1px solid gray;
           border-radius: 50%;
           padding: 5px;
-          margin-right: 5px;
-          width: 20px;
-          height: 20px;
+          margin-right: 10px;
           display: flex;
-          background-color: lightcyan;
+          flex: 0 0 20px;
           justify-content: center;
+          background-color: lightcyan;
+        }
+
+        .note-summary, .note-title {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          line-height: 21px;
+          max-height: 48px;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
         }
 
         .note-card-content {
           display: flex;
           flex-direction: column;
-
-          .note-summary {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            line-height: 21px;
-            max-height: 48px;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-          }
         }
       }
     }

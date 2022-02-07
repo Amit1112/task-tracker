@@ -25,7 +25,7 @@
             <mat-card-header>
               <mat-card-title>
                 <span class="note-id">{{note.id}}</span>
-                <span>{{note.title}}</span>
+                <span  class="note-title" [matTooltip]="note.title" [matTooltipPosition]="'above'">{{note.title}}</span>
                 <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
                   <mat-icon>more_vert</mat-icon>
                 </button>
