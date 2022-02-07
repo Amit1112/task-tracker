@@ -1,5 +1,6 @@
 .grid-container {
   margin: 20px;
+
   ::ng-deep {
     .mat-card-header-text {
       margin: 0;
@@ -15,6 +16,15 @@
       padding: 10px;
     }
   }
+
+  .filter-section {
+    display: flex;
+
+    .left-space {
+      flex: 0 0 10%;
+    }
+  }
+
   .row-wrapper {
     display: flex;
     align-items: center;
@@ -23,10 +33,12 @@
   .dashboard-card-content {
     text-align: center;
   }
+
   .weekday-label {
     height: 40px;
     flex: 0 0 10%;
   }
+
   .weekday-value {
     display: flex;
     align-items: center;
@@ -35,6 +47,7 @@
     height: 40px;
     flex: 0 0 17%;
   }
+
   .weekday-label-node {
     display: flex;
     align-items: center;
@@ -42,6 +55,7 @@
     height: 195px;
     flex: 0 0 10%;
   }
+
   .weekday-value-node {
     height: 195px;
     flex: 0 0 17%;
@@ -50,10 +64,12 @@
     .weekday-notes {
       position: relative;
       padding: 5px;
+
       .note-card {
         height: 152px;
         position: absolute;
         width: 85%;
+
         .note-id {
           border: 1px solid gray;
           border-radius: 50%;
@@ -65,9 +81,11 @@
           background-color: lightcyan;
           justify-content: center;
         }
+
         .note-card-content {
           display: flex;
           flex-direction: column;
+
           .note-summary {
             overflow: hidden;
             text-overflow: ellipsis;

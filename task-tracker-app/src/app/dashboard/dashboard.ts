@@ -6,6 +6,7 @@ export interface Note {
   startDate: number;
   endDate: number;
   duration?: number;
+  formattedDate?: string
 }
 
 export interface NoteLabel {

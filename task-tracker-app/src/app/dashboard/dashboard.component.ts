@@ -14,7 +14,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  /** Based on the screen size, switch from standard to one column per row */
+
   filterOptions: FilterOption[] = [
     { id: 0, text: 'All'}
   ];
@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   noteLabels: NoteLabel[] = [];
   formattedNotesMap: any = {};
   filterControl = new FormControl(this.filterOptions[0].id);
+  noteLabelsCopy: NoteLabel[] = [];
 
   constructor(
     private dashboardService: DashboardService,
@@ -38,17 +39,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
       console.log(notes, noteLabels);
       this.noteLabels = noteLabels;
       this.filterOptions = [...this.filterOptions, ...this.noteLabels];
+      this.noteLabelsCopy = [...noteLabels];
       this.formatNotes(notes.notes, noteLabels);
     });
   }
 
   formatNotes(notes: Note[], noteLabels: NoteLabel[]) {
     let notesWithLabel: any = {};
-    let minDate = 100000000000;
-    // notesWithLabel = notes.reduce((acc, note) => {
-    //   note.labels
-    //   return acc;
-    // }, {});
+    let minDate = 1000000000000000;
 
     notes.forEach(note => {
       if (minDate > note.startDate) minDate = note.startDate;
@@ -67,6 +65,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
     console.log(notesWithLabel);
     this.generateWeekDays(minDate);
+
     // Filter notes as DD.MM labels array
     Object.keys(notesWithLabel).forEach(key => {
       notesWithLabel[key].notes.forEach((note: any) => {
@@ -106,16 +105,37 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().subscribe((updatedNote : Note) => {
       console.log('The dialog was closed', updatedNote);
-      this.updateNotes(updatedNote);
+      if (updatedNote) {
+        this.updateNotes(updatedNote);
+      }
     });
   }
 
   updateNotes(updatedNote: Note) {
-    // TODO: Update the notes
+    let tempNotesMap = {...this.formattedNotesMap};
+    const dateLabel = updatedNote.formattedDate;
+    updatedNote.labels.forEach((labelId) => {
+      const labelObj = this.noteLabels.find((labelObj) => labelObj.id === labelId);
+      if (labelObj && dateLabel) {
+        const labelName = labelObj.text;
+        const index = tempNotesMap[labelName][dateLabel].findIndex((noteItem: Note) => noteItem.id === +updatedNote.id);
+        tempNotesMap[labelName][dateLabel][index] = updatedNote;
+      }
+    });
+    this.formattedNotesMap = {...tempNotesMap};
   }
 
   onFilterChange() {
-    // TODO: Update the notes
+    setTimeout(() => {
+      const filterId = this.filterControl.value;
+      const filterOption = this.noteLabelsCopy.find((option) => option.id === filterId);
+      console.log(filterOption);
+      if(filterOption && filterOption.text !== this.filterOptions[0].text) {
+        this.noteLabels = [filterOption];
+      } else {
+        this.noteLabels = [...this.noteLabelsCopy];
+      }
+    });
   }
 
   ngOnDestroy(): void {

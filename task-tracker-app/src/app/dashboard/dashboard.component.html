@@ -1,14 +1,13 @@
 <div class="grid-container">
   <div class="filter-section">
-    <div>
-      <mat-form-field appearance="fill">
-        <mat-select [formControl]="filterControl" name="filter" (valueChange)="onFilterChange();">
-          <mat-option *ngFor="let option of filterOptions" [value]="option.id">
-            {{option.text}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+    <div class="left-space"></div>
+    <mat-form-field appearance="fill">
+      <mat-select [formControl]="filterControl" name="filter" (valueChange)="onFilterChange();">
+        <mat-option *ngFor="let option of filterOptions" [value]="option.id">
+          {{option.text}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
   <div class="" *ngFor="let label of noteLabels; let index = index;">
     <div class="row-wrapper" *ngIf="index === 0">
