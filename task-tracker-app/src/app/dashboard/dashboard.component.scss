@@ -27,6 +27,13 @@ $weekdays-background: #f5f1f1;
     .left-space {
       flex: 0 0 10%;
     }
+    .calendar-week {
+      display: flex;
+      align-items: center;
+      flex: 0 0 60%;
+      justify-content: center;
+      margin-bottom: 1.34375em
+    }
   }
 
   .row-wrapper {

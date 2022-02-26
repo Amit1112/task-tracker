@@ -8,6 +8,11 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+    <div class="calendar-week">
+      <mat-icon class="cursor-pointer" (click)="shiftLeftTasks()" [ngClass]="{'disable': weekShiftCounter === 1}">keyboard_arrow_left</mat-icon>
+      <span>Calendar week: {{weekShiftCounter}}</span>
+      <mat-icon class="cursor-pointer" (click)="shiftRightTasks()" [ngClass]="{'disable': weekShiftCounter === 3}">keyboard_arrow_right</mat-icon>
+    </div>
   </div>
   <div class="" *ngFor="let label of noteLabels; let index = index;">
     <div class="row-wrapper" *ngIf="index === 0">
@@ -16,12 +21,13 @@
     </div>
     <div class="row-wrapper">
       <div class="weekday-label-node">{{label.text}}</div>
-      <div class="weekday-value-node" *ngFor="let day of weekDays;">
+      <div class="weekday-value-node" *ngFor="let day of weekDays;let dayIdx = index;">
         <div class="weekday-notes">
           <mat-card class="note-card"
             *ngFor="let note of formattedNotesMap[label.text][day];let noteIdx = index;"
-            [style.height.px]="(154 - noteIdx * 2)"
-            [style.width.%]="(85 * note.duration)">
+            [style.height.px]="(154 - noteIdx * 2.5)"
+            [ngStyle]="{'width.%': (5-dayIdx)>=note.duration ? (85 * note.duration) : (85 * (5-dayIdx))}"
+            [style.zIndex]="note.duration">
             <mat-card-header>
               <mat-card-title>
                 <span class="note-id">{{note.id}}</span>

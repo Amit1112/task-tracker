@@ -26,6 +26,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   formattedNotesMap: any = {};
   filterControl = new FormControl(this.filterOptions[0].id);
   noteLabelsCopy: NoteLabel[] = [];
+  calenderWeek = 1;
+  weekShiftCounter = 1;
+  startDate = 0;
 
   constructor(
     private dashboardService: DashboardService,
@@ -49,7 +52,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     let minDate = 1000000000000000;
 
     notes.forEach(note => {
+      note.startDate = note.startDate * 1000;
+      note.endDate = note.endDate * 1000;
       if (minDate > note.startDate) minDate = note.startDate;
+      this.startDate = minDate;
+      this.calenderWeek = this.getWeekNumber(new Date(minDate));
       let noteObj: any = {...note};
       noteObj.duration = (new Date(note.endDate).getUTCDate() - new Date(note.startDate).getUTCDate() + 1);
       noteObj.formattedDate = new Date(note.startDate).getUTCDate() + '.' + (new Date(note.startDate).getUTCMonth() + 1);
@@ -137,6 +144,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  shiftLeftTasks() {
+    this.weekShiftCounter--;
+    this.generateWeekDays(this.addDays(7 * (this.weekShiftCounter-1), new Date(this.startDate)));
+  }
+
+  shiftRightTasks() {
+    this.generateWeekDays(this.addDays(7 * this.weekShiftCounter, new Date(this.startDate)));
+    this.weekShiftCounter++;
+  }
+
+  getWeekNumber(date: any) {
+    let onejan: any = new Date(date.getFullYear(), 0, 1);
+    return Math.ceil((((date - onejan) / 86400000) + onejan.getDay() + 1) / 7);
+  };
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
